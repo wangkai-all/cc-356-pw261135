@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contract Gate — multi-source line ingestion</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="mark">◆</span>
+        <div>
+          <h1>Contract Gate</h1>
+          <p>Raw packages in, contract-shaped lines out. Mappings are proposed, approved, revoked — never assumed.</p>
+        </div>
+      </div>
+      <nav id="tabs">
+        <a href="#sources" data-view="sources" class="active">Sources</a>
+        <a href="#mappings" data-view="mappings">Mappings</a>
+        <a href="#events" data-view="events">Events</a>
+        <span id="attention-count" class="pill hidden"></span>
+      </nav>
+    </header>
+
+    <div id="message" class="message hidden"></div>
+
+    <main id="view"></main>
+
+    <footer class="foot">
+      <span>Package bytes are retained and re-hashed before every ingest and replay.</span>
+      <a href="/api/health">health</a>
+      <a href="/api/contract">contract</a>
+    </footer>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

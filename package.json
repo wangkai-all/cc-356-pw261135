@@ -1,0 +1,17 @@
+{
+  "name": "contract-gate",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Multi-source line-item ingestion with raw-package retention, versioned mappings, contract gating and replay.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --test --test-reporter=spec",
+    "test:unit": "node --test test/unit.test.js",
+    "test:e2e": "node --test test/e2e.test.js",
+    "smoke": "node scripts/smoke.js"
+  }
+}

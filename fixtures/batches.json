@@ -1,0 +1,316 @@
+{
+  "by_source": {
+    "northwind": [
+      {
+        "name": "nw-2026-11-a",
+        "note": "Baseline: flat array, numeric money, explicit identifiers.",
+        "body": {
+          "batch_id": "nw-2026-11-a",
+          "issued_at": "2026-11-02T08:00:00Z",
+          "currency": "USD",
+          "lines": [
+            {
+              "line_id": "NW-1",
+              "sku": "nw-1001",
+              "description": "Steel bracket, 40mm",
+              "quantity": 4,
+              "unit_price": 12.5,
+              "amount": 50.0,
+              "unit": "case"
+            },
+            {
+              "line_id": "NW-2",
+              "sku": "nw-1002",
+              "description": "Hex bolt M8",
+              "quantity": 100,
+              "unit_price": 0.35,
+              "amount": 35.0,
+              "unit": "each"
+            },
+            {
+              "line_id": "NW-3",
+              "sku": "nw-1003",
+              "description": "Rubber gasket",
+              "quantity": 12,
+              "unit_price": 2.25,
+              "amount": 27.0,
+              "unit": "each"
+            }
+          ]
+        }
+      },
+      {
+        "name": "nw-2026-11-b",
+        "note": "New types: quantity as text, money as formatted text, one line price as an object. New field supplier_note.",
+        "body": {
+          "batch_id": "nw-2026-11-b",
+          "issued_at": "2026-11-09T08:00:00Z",
+          "currency": "USD",
+          "lines": [
+            {
+              "line_id": "NW-1",
+              "sku": "nw-1001",
+              "description": "Steel bracket, 40mm",
+              "quantity": "4",
+              "unit_price": "$12.50",
+              "amount": "50.00 USD",
+              "unit": "case",
+              "supplier_note": "price held"
+            },
+            {
+              "line_id": "NW-2",
+              "sku": "nw-1002",
+              "description": "Hex bolt M8",
+              "quantity": "100",
+              "unit_price": "$0.35",
+              "amount": "$35.00",
+              "unit": "each"
+            },
+            {
+              "line_id": "NW-4",
+              "sku": "nw-1004",
+              "description": "Anchor kit",
+              "quantity": "1,200",
+              "unit_price": {
+                "value": 3.1,
+                "currency": "USD"
+              },
+              "amount": "3,720.00 USD",
+              "unit": "each"
+            }
+          ]
+        }
+      },
+      {
+        "name": "nw-2026-11-c",
+        "note": "Amount became a two-element array [gross, discount] on every line: its meaning is ambiguous without a human decision, so it must not be auto-read or auto-dropped.",
+        "body": {
+          "batch_id": "nw-2026-11-c",
+          "issued_at": "2026-11-16T08:00:00Z",
+          "currency": "USD",
+          "lines": [
+            {
+              "line_id": "NW-1",
+              "sku": "nw-1001",
+              "description": "Steel bracket, 40mm",
+              "quantity": "4",
+              "unit_price": "$12.50",
+              "amount": [
+                50.0,
+                5.0
+              ],
+              "unit": "case"
+            },
+            {
+              "line_id": "NW-2",
+              "sku": "nw-1002",
+              "description": "Hex bolt M8",
+              "quantity": "100",
+              "unit_price": "$0.35",
+              "amount": [
+                35.0,
+                0.0
+              ],
+              "unit": "each"
+            },
+            {
+              "line_id": "NW-5",
+              "sku": "nw-1005",
+              "description": "Anchor bolt",
+              "quantity": "8",
+              "unit_price": "$1.75",
+              "amount": [
+                14.0,
+                1.4
+              ],
+              "unit": "each"
+            }
+          ]
+        }
+      },
+      {
+        "name": "nw-2026-11-d",
+        "note": "Hard change: lines is now an object of packed strings. No structural mapping can read it; the package must wait for a hand-written mapping and must not block other sources.",
+        "body": {
+          "batch_id": "nw-2026-11-d",
+          "issued_at": "2026-11-17T08:00:00Z",
+          "currency": "USD",
+          "lines": {
+            "NW-1": "nw-1001|4|12.50",
+            "NW-2": "nw-1002|100|0.35",
+            "NW-6": "nw-1006|10|2.10"
+          }
+        }
+      }
+    ],
+    "acme": [
+      {
+        "name": "acme-inv-7781",
+        "note": "Positional rows: each line is a fixed-order array, not an object.",
+        "body": {
+          "invoice": "ACME-7781",
+          "currency": "USD",
+          "rows": [
+            [
+              "AC-1",
+              "acme-77",
+              "Hex bolt, zinc",
+              10,
+              2.25,
+              22.5
+            ],
+            [
+              "AC-2",
+              "acme-78",
+              "Washer 10mm",
+              25,
+              0.12,
+              3.0
+            ],
+            [
+              "AC-3",
+              "acme-79",
+              "Lock nut",
+              25,
+              0.18,
+              4.5
+            ]
+          ]
+        }
+      },
+      {
+        "name": "acme-inv-7802",
+        "note": "Same supplier, next invoice: rows gained a trailing unit column and positions shifted are stable. One unit missing.",
+        "body": {
+          "invoice": "ACME-7802",
+          "currency": "USD",
+          "rows": [
+            [
+              "AC-1",
+              "acme-77",
+              "Hex bolt, zinc",
+              10,
+              2.25,
+              22.5,
+              "each"
+            ],
+            [
+              "AC-2",
+              "acme-78",
+              "Washer 10mm",
+              25,
+              0.12,
+              3.0,
+              "each"
+            ],
+            [
+              "AC-4",
+              "acme-80",
+              "Spring clip",
+              40,
+              0.33,
+              13.2
+            ]
+          ]
+        }
+      }
+    ],
+    "globex": [
+      {
+        "name": "gx-orders-551",
+        "note": "Nested orders \u2192 lines, scalar quantity and price strings.",
+        "body": {
+          "feed": "gx-orders-551",
+          "orders": [
+            {
+              "order_no": "GX-551-A",
+              "currency": "EUR",
+              "lines": [
+                {
+                  "sku": "gx-9",
+                  "qty": 3,
+                  "price": "9.99",
+                  "total": "29.97",
+                  "desc": "Sensor, 5m"
+                },
+                {
+                  "sku": "gx-10",
+                  "qty": 2,
+                  "price": "14.50",
+                  "total": "29.00",
+                  "desc": "Sensor, 10m"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "gx-orders-552",
+        "note": "New shape: qty and price became single-element arrays on one order only; the other order keeps the old scalar shape. New field 'dims'.",
+        "body": {
+          "feed": "gx-orders-552",
+          "orders": [
+            {
+              "order_no": "GX-552-A",
+              "currency": "EUR",
+              "lines": [
+                {
+                  "sku": "gx-9",
+                  "qty": [
+                    3
+                  ],
+                  "price": [
+                    {
+                      "amount": "9.99",
+                      "currency": "EUR"
+                    }
+                  ],
+                  "total": "29.97",
+                  "desc": "Sensor, 5m",
+                  "dims": {
+                    "l": 10,
+                    "w": 4,
+                    "h": 4
+                  }
+                },
+                {
+                  "sku": "gx-10",
+                  "qty": [
+                    2
+                  ],
+                  "price": [
+                    {
+                      "amount": "14.50",
+                      "currency": "EUR"
+                    }
+                  ],
+                  "total": "29.00",
+                  "desc": "Sensor, 10m",
+                  "dims": {
+                    "l": 10,
+                    "w": 4,
+                    "h": 4
+                  }
+                }
+              ]
+            },
+            {
+              "order_no": "GX-552-B",
+              "currency": "EUR",
+              "lines": [
+                {
+                  "sku": "gx-11",
+                  "qty": 1,
+                  "price": "7.25",
+                  "total": "7.25",
+                  "desc": "Cable, 2m"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
